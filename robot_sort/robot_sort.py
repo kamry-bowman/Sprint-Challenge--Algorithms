@@ -8,7 +8,6 @@ class SortingRobot:
         self._position = 0    # The list position the robot is at
         self._light = "OFF"    # The state of the robot's light
         self._time = 0   # A time counter (stretch)
-        self.runs = 0
 
     def can_move_right(self):
         """
@@ -128,12 +127,7 @@ class SortingRobot:
         else:
             self.sort()
 
-    def sort(self):
-        if self.is_empty():
-            self.swap_item()
-            self.move_right()
-            self.sort()
-
+    def helper(sort):
         # check if held item is greater than item in front
         if self.compare_item() == 1:
             self.swap_item()
@@ -154,18 +148,15 @@ class SortingRobot:
         # exit condition
         if self.can_move_right():
             self.move_right()
-            self.runs += 1
-            if self.runs > 480:
-                print(self.runs, '>>>>>>>>>>>>>>>>>>>>')
-                print(self._list)
-            # if self.runs > 400:
-            #     return
             return self.sort()
 
         elif self.light_is_on():
             self.set_light_off()
             # self.swap_item()
             return self.return_to_start()
+
+    def sort(self):
+        self.swap_item()
 
         else:
             # the list is sorted, so this is the final move
