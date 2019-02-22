@@ -10,6 +10,7 @@ a)  a = 0
     while (a < n * n * n):
       a = a + n * n
 ```
+This will have O(n^2) as n increased by squares and the limit is cubed.
 
 ```
 b)  sum = 0
@@ -24,6 +25,7 @@ b)  sum = 0
             l += 1
             sum += 1
 ```
+This will have O(n ^ 3) as there are three nested loops reliant on n.  
 
 ```
 c)  def bunnieEars(bunnies):
@@ -32,6 +34,7 @@ c)  def bunnieEars(bunnies):
 
       return 2 + bunnyEars(bunnies-1)
 ```
+This will have O(n) as it will need to iterate however many bunnies it is initiated, one call per bunny.
 
 ## Exercise II
 
@@ -42,3 +45,13 @@ determine the value of _f_ such that the number of dropped eggs is minimized.
 
 Write out your proposed algorithm in plain English or pseudocode and give the
 runtime complexity of your solution.
+
+I would probably want to do a binary search type approach.
+
+So initialize a bottom and top limit, with bottom floor 0 and top the _n_ story.
+Go to midpoint and drop an egg. 
+If egg breaks, move top limit to midpoint.
+If egg does not break, move bottom limit to midpoint.
+Repeat this process until top limit and bottom limit are the same. That is the floor.
+
+This should have O(log n) complexity as the problem space is halved with each iteration.
