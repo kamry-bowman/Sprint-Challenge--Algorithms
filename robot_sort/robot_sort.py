@@ -121,15 +121,18 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    def return_to_start(self):
+        if self.can_move_left():
+            self.move_left()
+            self.return_to_start()
+        else:
+            self.sort()
+
     def sort(self):
-        # if robot is empty, either it is on the way to the start or at the start
         if self.is_empty():
-            if self.can_move_left():
-                self.move_left()
-                self.sort()
-            else:
-                self.swap_item()
-                self.move_right()
+            self.swap_item()
+            self.move_right()
+            self.sort()
 
         # check if held item is greater than item in front
         if self.compare_item() == 1:
@@ -161,15 +164,13 @@ class SortingRobot:
 
         elif self.light_is_on():
             self.set_light_off()
-            self.swap_item()
-            self.move_left()
-            return self.sort()
+            # self.swap_item()
+            return self.return_to_start()
 
         else:
             # the list is sorted, so this is the final move
-            print(self._item, self.is_empty())
+            print(self._item, self.is_empty(), self._position)
             if self.compare_item() == 1:
-                self.swap_item()
                 self.move_left()
                 self.swap_item()
             else:
@@ -187,7 +188,7 @@ if __name__ == "__main__":
 
     l2 = [15, 41, 58, 49, 26, 4, 15, 17]
 
-    robot = SortingRobot(l2)
+    robot = SortingRobot(l)
 
     robot.sort()
     print(robot._list)
