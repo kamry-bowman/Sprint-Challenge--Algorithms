@@ -10,7 +10,7 @@ a)  a = 0
     while (a < n * n * n):
       a = a + n * n
 ```
-This will have O(n^2) as n increased by squares and the limit is cubed.
+This will have O(n) as n increased by squares and the limit is cubed.
 
 ```
 b)  sum = 0
