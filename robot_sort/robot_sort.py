@@ -8,7 +8,6 @@ class SortingRobot:
         self._position = 0    # The list position the robot is at
         self._light = "OFF"    # The state of the robot's light
         self._time = 0   # A time counter (stretch)
-        self.runs = 0
 
     def can_move_right(self):
         """
@@ -154,12 +153,6 @@ class SortingRobot:
         # exit condition
         if self.can_move_right():
             self.move_right()
-            self.runs += 1
-            if self.runs > 480:
-                print(self.runs, '>>>>>>>>>>>>>>>>>>>>')
-                print(self._list)
-            # if self.runs > 400:
-            #     return
             return self.sort()
 
         elif self.light_is_on():
