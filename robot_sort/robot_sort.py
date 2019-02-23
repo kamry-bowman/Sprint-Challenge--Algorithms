@@ -103,7 +103,7 @@ class SortingRobot:
             self.move_left()
             self.return_to_start()
 
-    def bubble(self):
+    def bubble_up(self):
         self.swap_item()
         self.move_right()
         # check if held item is greater than item in front
@@ -121,6 +121,21 @@ class SortingRobot:
             self.swap_item()
             self.move_right()
 
+    def bubble_down(self):
+        self.swap_item()
+        self.move_left()
+        # check if held item is greater than item in front
+        if self.compare_item() == -1:
+            self.swap_item()
+            self.move_right()
+            self.swap_item()
+            self.move_left()
+
+        else:
+            self.move_right()
+            self.swap_item()
+            self.move_left()
+
     def put_down_possible_item(self):
         if self.compare_item() == None:
             self.move_left()
@@ -133,15 +148,17 @@ class SortingRobot:
     def sort(self):
 
         while self.can_move_right():
-            self.bubble()
+
+            while self.can_move_right():
+                # print('up', self._position, self._item)
+                self.bubble_up()
 
             if not self.can_move_right() and self.light_is_on():
                 self.set_light_off()
-                self.swap_item()
-                self.return_to_start()
+                while self.can_move_left():
+                    self.bubble_down()
 
-        self.put_down_possible_item()
-        self.return_to_start()
+        # self.put_down_possible_item()
 
 
 if __name__ == "__main__":
