@@ -104,61 +104,62 @@ class SortingRobot:
             self.return_to_start()
 
     def bubble_up(self):
-        self.swap_item()
-        self.move_right()
-        # check if held item is greater than item in front
-        if self.compare_item() == 1:
-            self.swap_item()
-            self.move_left()
+
+        while self.can_move_right():
+
             self.swap_item()
             self.move_right()
+            # check if held item is greater than item in front
+            if self.compare_item() == 1:
+                self.swap_item()
+                self.move_left()
+                self.swap_item()
+                self.move_right()
 
-            # turn light on to indicate a swap was needed
-            self.set_light_on()
+                # turn light on to indicate a swap was needed
+                self.set_light_on()
 
-        else:
-            self.move_left()
-            self.swap_item()
-            self.move_right()
+            else:
+                self.move_left()
+                self.swap_item()
+                self.move_right()
 
     def bubble_down(self):
-        self.swap_item()
-        self.move_left()
-        # check if held item is greater than item in front
-        if self.compare_item() == -1:
-            self.swap_item()
-            self.move_right()
+        while self.can_move_left():
+
             self.swap_item()
             self.move_left()
-
-        else:
-            self.move_right()
-            self.swap_item()
-            self.move_left()
-
-    def put_down_possible_item(self):
-        if self.compare_item() == None:
-            self.move_left()
-
-            if self.compare_item() != None:
-                # indicates we are still holding an item
+            # check if held item is greater than item in front
+            if self.compare_item() == -1:
+                self.swap_item()
                 self.move_right()
                 self.swap_item()
+                self.move_left()
+
+            else:
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+
+    # def put_down_possible_item(self):
+    #     if self.compare_item() == None:
+    #         self.move_left()
+
+    #         if self.compare_item() != None:
+    #             # indicates we are still holding an item
+    #             self.move_right()
+    #             self.swap_item()
 
     def sort(self):
 
         while self.can_move_right():
 
-            while self.can_move_right():
-                # print('up', self._position, self._item)
-                self.bubble_up()
+            self.bubble_up()
 
             if not self.can_move_right() and self.light_is_on():
-                self.set_light_off()
-                while self.can_move_left():
-                    self.bubble_down()
 
-        # self.put_down_possible_item()
+                self.set_light_off()
+                self.bubble_down()
 
 
 if __name__ == "__main__":
