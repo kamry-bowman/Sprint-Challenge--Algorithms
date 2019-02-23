@@ -98,11 +98,6 @@ class SortingRobot:
         """
         return self._light == "ON"
 
-    def return_to_start(self):
-        if self.can_move_left():
-            self.move_left()
-            self.return_to_start()
-
     def bubble_up(self):
 
         while self.can_move_right():
@@ -136,19 +131,13 @@ class SortingRobot:
                 self.swap_item()
                 self.move_left()
 
+                # turn light on to indicate a swap was needed
+                self.set_light_on()
+
             else:
                 self.move_right()
                 self.swap_item()
                 self.move_left()
-
-    # def put_down_possible_item(self):
-    #     if self.compare_item() == None:
-    #         self.move_left()
-
-    #         if self.compare_item() != None:
-    #             # indicates we are still holding an item
-    #             self.move_right()
-    #             self.swap_item()
 
     def sort(self):
 
@@ -160,6 +149,11 @@ class SortingRobot:
 
                 self.set_light_off()
                 self.bubble_down()
+
+                if self.light_is_on():
+                    self.set_light_off()
+                else:
+                    return
 
 
 if __name__ == "__main__":
